@@ -1,0 +1,195 @@
+﻿﻿@{
+    ViewBag.Title = "Home Page";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<button>Send an HTTP POST request to a page and get the result back</button>
+
+<script>
+    $(document).ready(function () {
+        $("button").click(function () {
+            const targetUrl = 'http://test.sajjadyosefi.ir/api/Application/ApplicationListByTypeCode';
+            const proxyUrl = 'https://corsproxy.io/?';
+
+            //ok - 1
+            //StackOverFlow   
+            //$.post(proxyUrl + targetUrl,
+            //{
+            //    name: "Donald Duck",
+            //    city: "Duckburg"
+            //},
+            //function (data, status) {
+            //    alert("Data: " + data + "\nStatus: " + status);
+            //});
+
+
+            //ok - 2
+            //fetch         
+            //fetch(proxyUrl + targetUrl, {
+            //    method: "POST", headers: {
+            //        'Content-Type': 'application/json'
+            //    }, body: JSON.stringify({
+            //    name: "Donald Duck",
+            //    city: "Duckburg"
+            //})})
+            //  .then(response => response.json())
+            //  .then(data => console.log(data))
+            //  .catch(error => console.error('Error:', error));
+
+
+
+            //ok - 3
+            //sajjad  
+            //$.ajax({
+            //    type: 'POST',
+            //    url: proxyUrl + targetUrl, 
+            //    data: {
+            //        "id": 8057,
+            //        "pageIndex": 0,
+            //        "pageSize": 10
+            //    }, 
+            //    dataType: 'json',
+            //    success: function (data) {
+            //        alert("Data: " + data + "\nStatus: " + status);
+            //    }
+            //});
+
+            
+            //new from https://copyprogramming.com/howto/what-is-the-difference-between-fetch-and-jquery-ajax
+            //const response = $.ajax({
+            //    method: 'POST',
+            //    url:  proxyUrl + targetUrl,
+            //    data: JSON.stringify(data),
+            //    contentType: 'application/json'
+            //})
+
+        });
+    });
+
+    var _incallback;
+    var pages = 1;
+    var Id = 8057;
+    var pageIndex = 0;
+    var pageSize = 10;
+
+        $(window).scroll(function () {
+            var hT = $('#progressmarker').offset().top,
+                hH = $('#progressmarker').outerHeight(),
+                wH = $(window).height(),
+                wS = $(window).scrollTop();
+            // don't do it if we have reached last page OR we are still grabbing items
+            if (pages >= pageIndex && !_incallback) {
+                if (wS > (hT + hH - wH)) {
+                    GetData();
+                }
+            }
+        });
+        function GetData() {
+            _incallback = true;
+
+            $.post("http://test.sajjadyosefi.ir/api/Application/ApplicationListByTypeCode",
+                {
+                    name: "Donald Duck",
+                    city: "Duckburg"
+                },
+                function (data, status) {
+                    alert("Data: " + data + "\nStatus: " + status);
+                });
+
+            //$.ajax({
+            //    type: 'POST',
+            //    //url: 'http://localhost:24710/api/Category/CategoryLevel1',
+            //    //url: 'http://test.sajjadyosefi.ir/api/Application/ApplicationListByTypeCode', 
+            //    url: 'https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js',
+            //    headers: { 
+            //        'Content-Type': 'application/json'
+            //    },  
+                 
+            //    data: {
+            //        "id": Id,
+            //        "pageIndex": pageIndex,
+            //        "pageSize": pageSize
+            //    }, 
+            //    dataType: 'json',
+            //    success: function (data) {
+            //        if (data != null) {
+            //            $("#listmore").append(data);
+            //            pageIndex++;
+            //        }
+            //    },
+            //    beforeSend: function () {
+            //        $("#progress").show();
+            //    },
+            //    complete: function () {
+            //        $("#progress").hide();
+            //        _incallback = false;
+            //    },
+            //    error: function () {
+            //        //alert("Error while retrieving data!");
+            //        _incallback = false;
+            //    }
+            //});
+        }
+        function GetCatData() {
+            _incallback = true;
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:24710/api/Application/ApplicationListByTypeCode',
+                data: {
+                    "id": Id,
+                    "pageIndex": pageIndex,
+                    "pageSize": pageSize
+                },
+                crossDomain: true,
+                dataType: 'jsonp',
+                success: function (data) {
+                    if (data != null) {
+                        $("#listmore").append(data);
+                        pageIndex++;
+                    }
+                },
+                beforeSend: function () {
+                    $("#progress").show();
+                },
+                complete: function () {
+                    $("#progress").hide();
+                    _incallback = false;
+                },
+                error: function () {
+                    //alert("Error while retrieving data!");
+                    _incallback = false;
+                }//
+            });
+        }
+</script>
+<a id="progressmarker" href="#examples">Skip to examples</a>
+
+<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+            enables a clean separation of concerns and gives you full control over markup
+            for enjoyable, agile development.
+        </p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+
+
+</div>
