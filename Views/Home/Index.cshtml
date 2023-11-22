@@ -70,11 +70,9 @@
             success: function (data) {
                 if (data != null) {  
                     var arr = $.parseJSON(data);
-
                     for (var i = 0, len = arr.postList.length; i < len; i++) {
                         AppendApplicationsListData(arr.postList[i]);
                     }
-
                     pageIndex++;
                     _incallback = false;
                     pages = pageIndex;
@@ -245,6 +243,7 @@
         //var obj = jQuery.parseJSON(data);
 
 
+    //null
         //"NameEn":null,
         //"StatementEn":null,
         //"DownloadCount":null,
@@ -260,11 +259,11 @@
         //$("#listmore").append('<div class="col-md-4">' + obj.URL + '</div>');
         //$("#listmore").append('<div class="col-md-4">' + obj.Priority + '</div>');
 
-
+    //use UnUse
         //ApplicationID":2,                          ok
         //"NameFa":"مزایده",                        ok
         //"StatementFa":"مزایده",                   ok
-        //"TextFa":"مزایده",                        ok
+        //"TextFa":"مزایده",                        
         //"VersionCode":0,                           ok
         //"VersionName":"آبنبات",                   ok
         //"StoreName":"iranapps",                    ok
@@ -283,7 +282,7 @@
             '<div class="col-md-4">' +
             '<h2>' + obj.NameFa + '(' + obj.VersionName + '-v' + obj.VersionCode + ')</h2>' +
             '<p>' + obj.StatementFa + '</p>' +
-            '<p>' + obj.TextFa + '</p>' +
+            //'<p>' + obj.TextFa + '</p>' +
             '<p>سازنده : ' + obj.Company + '<a class="btn btn-default" href="' + obj.CompanyUrl + '">سایت... »</a></p></p>' +
             '<p>منتشر شده در ' + store + isFree + '</p>' +
             ' <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=' + obj.ApplicationID + '">جزئیات... »</a></p>'+
@@ -334,11 +333,55 @@
             return 'ژوبین'; 
     }
 
+
+    ////////////////image////////////////////////////
+    var imgdemo = $("#imgdemo");
+    //async function loadImage(fname) {
+    //    var response = await fetch(fname)
+    //    imgdemo.src =  URL.createObjectURL( await response.blob() )
+    //}
+
+    function loadImage(fname) {
+        //var response = fetch(fname)
+        //imgdemo.src = URL.createObjectURL(response.blob())
+
+        var str = fetch(fname)
+        //imgdemo.innerHTML = str.text()
+    }
+
+
+ 
+    const targetPicUrl = 'https://sajjadyosefi.ir/img/profile.jpg';
+    const proxyPicUrl = 'https://corsproxy.io/?';
+
+    //$.ajax({
+    //    type: 'GET',
+    //    url: proxyPicUrl + targetPicUrl,
+    //    dataType: 'image/jpg',
+    //    dataType: 'html',
+    //    async: true,
+    //    crossDomain: 'true', 
+    //    success: function(data, status) {
+    //        console.log("Status: "+status+"\nData: "+data);
+    //        result = data;
+
+    //        imgdemo.attr('src', data);
+    //        imgdemo.appendTo('#imgdemo');
+    //    },
+    //    error: function () {
+    //        alert("Error while retrieving data!");
+    //    }
+    //});
+     
+    //loadImage(proxyPicUrl + targetPicUrl)
+
+ 
+
 </script>
 <br />
 <a id="progressmarker" href="#examples"> </a>
 <br />
-
+<img id="imgdemo"  width="100px" height="200px"/> 
 <div class="jumbotron">
     <h1>ASP.NET</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
