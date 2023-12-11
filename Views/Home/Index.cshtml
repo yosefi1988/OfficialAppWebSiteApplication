@@ -11,6 +11,7 @@
 <script>
     //url
     const targetUrl = 'http://test.sajjadyosefi.ir/api/Application/ApplicationListByTypeCode';
+    const targetCat2Url = 'http://test.sajjadyosefi.ir/api/Application/ApplicationListByCompanyCode';
     const proxyUrl = 'https://corsproxy.io/?';
 
 
@@ -58,6 +59,9 @@
 
     //load from server
     function GetApplicationsListDataByCat() {
+        //ok
+        //service name : ApplicationListByTypeCode
+
         _incallback = true;
         $.ajax({
             type: 'POST', 
@@ -102,10 +106,14 @@
         });
     }
     function GetApplicationsListDataByCompany() {
+        //باید ساخته بشه
+        //نام سرویس
+        //targetCat2Url  - ApplicationListByCompanyCode
+
         _incallback = true;
         $.ajax({
             type: 'POST',
-            url: proxyUrl + targetUrl,
+            url: proxyUrl + targetCat2Url,
             //headers: { 
             //    'Content-Type': 'application/json'
             //},  
@@ -149,6 +157,14 @@
     }
 
     function GetCat1ListData() {
+        //اینو باید از سرور بگیرم
+        //الان هارد کده
+        // اندروید - پورتال - بازی
+
+        //[Viw_Site_Cat_level_1]
+        //اپلیکیشن های اندرویدی
+        //وب سایت ها
+
         $.ajax({
             type: 'POST',
             url: proxyUrl + targetUrl,
@@ -179,6 +195,14 @@
         });
     }
     function GetCat2ListData(id) {
+        //اینو باید از سرور بگیرم
+        //الان هارد کده
+        // listCat2 1  -  listCat2 2
+
+        //[Viw_Site_Cat_level_2]
+        //اپلیکیشن های پارساپرداز
+        //اپلیکیشن های رسمی بانک ها
+        //وب سایت های پارسا پرداز
         $.ajax({
             type: 'POST',
             url: proxyUrl + targetUrl,
@@ -227,6 +251,7 @@
     function PrepareGetApplicationsListDataByCompanyId(id) {
         //reset listmore
         //$("#listmore").html('<div class="col-md-4">  <h2>Getting started</h2>  <p>  ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that  enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development. </p> <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more »</a></p> </div>');
+        $("#listmore").html('');
 
         _incallback;
         pages = 1;
@@ -237,7 +262,6 @@
 
         //reset listCat2
         //$("#listCat2").append('<div class="col-md-4">  <h2>Getting started</h2>  <p>  ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that  enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development. </p> <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more »</a></p> </div>');
-        GetCat2ListData(id);
     }
     
 
@@ -420,6 +444,9 @@
             این دسته بندی به عنوان پیشفرض انتخاب شده و نمایش داده می شود. 
         </p> 
         <p><a class="btn btn-default" href="#">Learn more &raquo;</a></p>
+        <a class="btn btn-default" href="javascript:void(0);" onclick="PrepareGetApplicationsListDataByCompanyId(8066);">وب سایت های پارسا پرداز &raquo;</a>
+        <a class="btn btn-default" href="javascript:void(0);" onclick="PrepareGetApplicationsListDataByCompanyId(8064);">اپلیکیشن های رسمی بانک ها &raquo;</a>
+        <a class="btn btn-default" href="javascript:void(0);" onclick="PrepareGetApplicationsListDataByCompanyId(8063);">اپلیکیشن های پارساپرداز &raquo;</a>
 
 
     </div>
