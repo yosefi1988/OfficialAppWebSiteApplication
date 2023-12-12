@@ -12,6 +12,9 @@
     //url
     const targetUrl = 'http://test.sajjadyosefi.ir/api/Application/ApplicationListByTypeCode';
     const targetCat2Url = 'http://test.sajjadyosefi.ir/api/Application/ApplicationListByCompanyCode';
+    const targetCatLevel1Url = 'http://test.sajjadyosefi.ir/api/Category/CategoryLevel1';
+    const targetCatLevel2Url = 'http://test.sajjadyosefi.ir/api/Category/CategoryLevel2';
+
     const proxyUrl = 'https://corsproxy.io/?';
 
 
@@ -74,7 +77,8 @@
                 "pageIndex": pageIndex,
                 "pageSize": pageSize
             }, 
-            dataType: 'json',
+            dataType: 'json', 
+            contentType: "application/x-www-form-urlencoded",
             success: function (data) {
                 if (data != null) {  
                     var arr = $.parseJSON(data);
@@ -122,7 +126,8 @@
                 "pageIndex": pageIndex,
                 "pageSize": pageSize
             },
-            dataType: 'json',
+            //dataType: 'json',
+            contentType: "application/x-www-form-urlencoded",
             success: function (data) {
                 if (data != null) {
                     var arr = $.parseJSON(data);
@@ -157,29 +162,23 @@
     }
 
     function GetCat1ListData() {
-        //اینو باید از سرور بگیرم
-        //الان هارد کده
-        // اندروید - پورتال - بازی
+        var data1 = {
+            "pageIndex": 0,
+            "pageSize": 2
+        };
 
-        //[Viw_Site_Cat_level_1]
-        //اپلیکیشن های اندرویدی
-        //وب سایت ها
 
         $.ajax({
             type: 'POST',
-            url: proxyUrl + targetUrl,
-            data: {
-                "id": Id,
-                "pageIndex": pageIndex,
-                "pageSize": 1
-            },
-            dataType: 'json',
+            url: proxyUrl + targetCatLevel1Url,
+            data: JSON.stringify(data1),
+//            dataType: "json",
+            contentType: "application/json",
             success: function (data) {
                 if (data != null) {
                     var arr = $.parseJSON(data);
-
-                    for (var i = 0, len = arr.postList.length; i < len; i++) {
-                        AppendCat1Data(arr.postList[i]);
+                    for (var i = 0, len = arr.cat1list.length; i < len; i++) {
+                        AppendCat1Data(arr.cat1list[i]);
                     }
                 }
             },
@@ -203,21 +202,31 @@
         //اپلیکیشن های پارساپرداز
         //اپلیکیشن های رسمی بانک ها
         //وب سایت های پارسا پرداز
+
+        var data1 = {
+            "pageIndex": 0,
+            "pageSize": 2
+        };
+
         $.ajax({
             type: 'POST',
-            url: proxyUrl + targetUrl,
-            data: {
-                "id": Id,
-                "pageIndex": pageIndex,
-                "pageSize": 1
-            },
+            url: proxyUrl + targetCatLevel2Url,
+            //data: {
+            //    //"id": Id,
+            //    "pageIndex": pageIndex,
+            //    "pageSize": 1
+            //},
+            data: JSON.stringify(data1),
+
             dataType: 'json',
+            contentType: "application/json",
+
             success: function (data) {
                 if (data != null) {
                     var arr = $.parseJSON(data);
 
-                    for (var i = 0, len = arr.postList.length; i < len; i++) {
-                        AppendCat2Data(arr.postList[i]);
+                    for (var i = 0, len = arr.cat2list.length; i < len; i++) {
+                        AppendCat2Data(arr.cat2list[i]);
                     }
                 }
             },
@@ -236,7 +245,7 @@
         //reset listmore
         //$("#listmore").html('<div class="col-md-4">  <h2>Getting started</h2>  <p>  ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that  enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development. </p> <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more »</a></p> </div>');
         $("#listmore").html('');
-
+        
         _incallback;
         pages = 1;
         Id = id;
@@ -245,6 +254,7 @@
         GetApplicationsListDataByCat();
 
         //reset listCat2
+        $("#listCat2").html('');
         //$("#listCat2").append('<div class="col-md-4">  <h2>Getting started</h2>  <p>  ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that  enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development. </p> <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more »</a></p> </div>');
         GetCat2ListData(id);
     }
@@ -327,9 +337,13 @@
 
     }
     function AppendCat1Data(obj) {
+
+       
+
         //var obj = jQuery.parseJSON('{"ApplicationID":2,"NameFa":"مزایده","StatementFa":"مزایده","TextFa":"مزایده","LogoPicture":null,"NameEn":null,"StatementEn":null,"VersionCode":0,"VersionName":"آبنبات","Price":null,"DownloadCount":null,"Views":null,"StoreName":"iranapps","isFree":true,"URL":null,"Description":"مزایده","AppTypeCode":8057,"CompanyCode":8063,"Company":"اپلیکیشن های پارساپرداز","CompanyUrl":"0","CompanyIcon":"0","Priority":null}');
-        //var obj = jQuery.parseJSON(data);
-        //$("#listCat1").append('<div class="col-md-4">----------------</div>'); 
+        //var obj = jQuery.parseJSON(data); 
+        $("#listCat1").append('<div class="col-md-4">  <h2>' + obj.Name + '</h2>  <p><a  class="btn btn-default" href="javascript:void(0);" onclick="PrepareGetApplicationsListDataByNewCat(' + obj.Id + ');">' + obj.Name + '... &raquo;</a></p> </div>');
+
         //$("#listCat1").append('<div class="col-md-4">  <h2>Getting started</h2>  <p>  ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that  enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development. </p> <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more »</a></p> </div>');
     }
     function AppendCat2Data(obj) {
@@ -338,6 +352,9 @@
         //$("#listCat2").append('<div class="col-md-4">----------------</div>');
         //$("#listCat2").append('<div class="col-md-4">  <h2>Getting started</h2>  <p>  ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that  enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development. </p> <p><a class="btn btn-default" href="javascript:void(0);" onclick="PrepareGetApplicationsListDataByCompanyId(8059);">Learn more &raquo;</a></p> </div>');
         //$("#listCat2").append('<div class="col-md-4">  <h2>Getting started</h2>  <p>  ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that  enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development. </p> <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more »</a></p> </div>');
+        $("#listCat2").append('<div class="col-md-4">*****</div>');
+        $("#listCat2").append('<div class="col-md-4">  <h2>' + obj.Name + '</h2>  <p><a  class="btn btn-default" href="javascript:void(0);" onclick="PrepareGetApplicationsListDataByNewCat(' + obj.Id + ');">' + obj.Name + '... &raquo;</a></p> </div>');
+
     }
 
 
@@ -417,23 +434,20 @@
 </div>
 
 <div id="listCat1" class="row">
-    <div class="col-md-4">
+    @*<div class="col-md-4">
         <h2>برنامه های موبایلی</h2>
         <p>
             مرور و نمایش لیستی از بهترین اپ های سیستم عامل اندروید.
             این دسته بندی به عنوان پیشفرض انتخاب شده و نمایش داده می شود. 
         </p>
         <p><a  class="btn btn-default" href="javascript:void(0);" onclick="PrepareGetApplicationsListDataByNewCat(8057);">لیست اپ ها... &raquo;</a></p>
-
-        
-</div>
+    </div>
     <div class="col-md-4">
         <h2>سایت ها</h2>
         <p>مشاهده و مرور بهترین سایت ها.</p>
-        @*<p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>*@
+        @*<p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>* @
         <p><a class="btn btn-default" href="javascript:void(0);" onclick="PrepareGetApplicationsListDataByNewCat(8059);">نمایش بیشتر... &raquo;</a></p>
-    </div>
-
+    </div>*@
 </div>
 <hr />
 <div id="listCat2" class="row">
