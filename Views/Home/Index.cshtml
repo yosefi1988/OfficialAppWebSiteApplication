@@ -14,9 +14,8 @@
     const targetCat2Url = 'http://test.sajjadyosefi.ir/api/Application/ApplicationListByCompanyCode';
     const targetCatLevel1Url = 'http://test.sajjadyosefi.ir/api/Category/CategoryLevel1';
     const targetCatLevel2Url = 'http://test.sajjadyosefi.ir/api/Category/CategoryLevel2';
-
+    const targetPicUrl = 'https://sajjadyosefi.ir/img/profile.jpg';
     const proxyUrl = 'https://corsproxy.io/?';
-
 
     //js
     var _incallback;
@@ -46,17 +45,12 @@
             //        "pageIndex": 0,
             //        "pageSize": 10
             //    }, 
-            //    dataType: 'json',
             //    success: function (data) {
             //        alert("Data: " + data + "\nStatus: " + status);
             //    }
             //});
         });
         GetCat1ListData();
-
-
-        //$("#imgdemo").attr("src", 'https://sajjadyosefi.ir/img/profile.jpg');
-
     });
 
 
@@ -64,6 +58,11 @@
     function GetApplicationsListDataByCat() {
         //ok
         //service name : ApplicationListByTypeCode
+        var data1 = {
+            "id": Id,
+            "pageIndex": pageIndex,
+            "pageSize": pageSize
+        };
 
         _incallback = true;
         $.ajax({
@@ -71,14 +70,9 @@
             url: proxyUrl + targetUrl,
             //headers: { 
             //    'Content-Type': 'application/json'
-            //},  
-            data: {
-                "id": Id,
-                "pageIndex": pageIndex,
-                "pageSize": pageSize
-            }, 
-            dataType: 'json', 
-            contentType: "application/x-www-form-urlencoded",
+            //},    
+            data: JSON.stringify(data1), 
+            contentType: "application/json",
             success: function (data) {
                 if (data != null) {  
                     var arr = $.parseJSON(data);
@@ -114,6 +108,12 @@
         //نام سرویس
         //targetCat2Url  - ApplicationListByCompanyCode
 
+        var data1 = {
+            "id": Id,
+            "pageIndex": pageIndex,
+            "pageSize": pageSize
+        };
+
         _incallback = true;
         $.ajax({
             type: 'POST',
@@ -121,13 +121,8 @@
             //headers: { 
             //    'Content-Type': 'application/json'
             //},  
-            data: {
-                "id": Id,
-                "pageIndex": pageIndex,
-                "pageSize": pageSize
-            },
-            //dataType: 'json',
-            contentType: "application/x-www-form-urlencoded",
+            data: JSON.stringify(data1),
+            contentType: "application/json",
             success: function (data) {
                 if (data != null) {
                     var arr = $.parseJSON(data);
@@ -204,6 +199,7 @@
         //وب سایت های پارسا پرداز
 
         var data1 = {
+            "id": Id,
             "pageIndex": 0,
             "pageSize": 2
         };
@@ -217,8 +213,6 @@
             //    "pageSize": 1
             //},
             data: JSON.stringify(data1),
-
-            dataType: 'json',
             contentType: "application/json",
 
             success: function (data) {
@@ -319,7 +313,7 @@
             '<div class="col-md-4">' +
             '<h2>' + obj.NameFa + '(' + obj.VersionName + '-v' + obj.VersionCode + ')</h2>' +
             '<p>' + obj.StatementFa + '</p>' +
-            '<img id="imgdemo" width="100px" height="100px" src=' + obj.LogoPicture + '>' + 
+            '<img width="100px" height="100px" src=' + obj.LogoPicture + '>' + 
             //'<p>' + obj.TextFa + '</p>' +
             '<p>سازنده : ' + obj.Company + '<a class="btn btn-default" href="' + obj.CompanyUrl + '">سایت... »</a></p></p>' +
             '<p>منتشر شده در ' + store + isFree + '</p>' +
@@ -377,56 +371,13 @@
         if (name == 'jhobin')
             return 'ژوبین'; 
     }
-
-
-    ////////////////image////////////////////////////
-    var imgdemo = $("#imgdemo");
-    //async function loadImage(fname) {
-    //    var response = await fetch(fname)
-    //    imgdemo.src =  URL.createObjectURL( await response.blob() )
-    //}
-
-    function loadImage(fname) {
-        //var response = fetch(fname)
-        //imgdemo.src = URL.createObjectURL(response.blob())
-
-        var str = fetch(fname)
-        //imgdemo.innerHTML = str.text()
-    }
-
-
- 
-    const targetPicUrl = 'https://sajjadyosefi.ir/img/profile.jpg';
-    const proxyPicUrl = 'https://corsproxy.io/?';
-
-    //$.ajax({
-    //    type: 'GET',
-    //    url: proxyPicUrl + targetPicUrl,
-    //    dataType: 'image/jpg',
-    //    dataType: 'html',
-    //    async: true,
-    //    crossDomain: 'true', 
-    //    success: function(data, status) {
-    //        console.log("Status: "+status+"\nData: "+data);
-    //        result = data;
-
-    //        imgdemo.attr('src', data);
-    //        imgdemo.appendTo('#imgdemo');
-    //    },
-    //    error: function () {
-    //        alert("Error while retrieving data!");
-    //    }
-    //});
-     
-    //loadImage(proxyPicUrl + targetPicUrl)
-
- 
+  
 
 </script>
 <br />
 <a id="progressmarker" href="#examples"> </a>
 <br />
-<img id="imgdemo"  width="100px" height="200px"/> 
+<img width="100px" height="200px"/> 
 <div class="jumbotron">
     <h1>ASP.NET</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
