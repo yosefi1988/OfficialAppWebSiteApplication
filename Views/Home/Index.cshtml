@@ -14,6 +14,7 @@
     const targetCat2Url = 'http://test.sajjadyosefi.ir/api/Application/ApplicationListByCompanyCode';
     const targetCatLevel1Url = 'http://test.sajjadyosefi.ir/api/Category/CategoryLevel1';
     const targetCatLevel2Url = 'http://test.sajjadyosefi.ir/api/Category/CategoryLevel2';
+    const targetDetailsUrl = 'home/Details';
     const targetPicUrl = 'https://sajjadyosefi.ir/img/profile.jpg';
     const proxyUrl = 'https://corsproxy.io/?';
 
@@ -77,7 +78,7 @@
                 if (data != null) {  
                     var arr = $.parseJSON(data);
                     for (var i = 0, len = arr.postList.length; i < len; i++) {
-                        AppendApplicationsListData(arr.postList[i]);
+                        AppendApplicationsListData(arr.postList[i]); 
                     }
                     pageIndex++;
                     _incallback = false;
@@ -267,7 +268,42 @@
         //reset listCat2
         //$("#listCat2").append('<div class="col-md-4">  <h2>Getting started</h2>  <p>  ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that  enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development. </p> <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more »</a></p> </div>');
     }
-    
+    function GotoDetails(applicationid,storeName) {
+ 
+        var data1 = {
+            "applicationid": applicationid,
+            "storeName": storeName
+        }
+        window.location.href = targetDetailsUrl + '?applicationid=' + 2 + '&storeName=' + storeName;
+
+
+        //$.ajax({
+        //    type: 'POST',
+        //    url: targetDetailsUrl,
+        //    data: JSON.stringify(data1),
+        //    contentType: "application/json",
+
+        //    success: function (data) {
+        //        if (data != null) {
+        //            var arr = $.parseJSON(data);
+
+        //            for (var i = 0, len = arr.cat2list.length; i < len; i++) {
+        //                AppendCat2Data(arr.cat2list[i]);
+        //            }
+        //        }
+        //    },
+        //    beforeSend: function () {
+        //        $("#progress").show();
+        //    },
+        //    complete: function () {
+        //        $("#progress").hide();
+        //    },
+        //    error: function () {
+        //        alert("Error while retrieving data!");
+        //    }
+        //});
+    }
+
 
     //Append
     function AppendApplicationsListData(obj) {
@@ -317,9 +353,12 @@
             //'<p>' + obj.TextFa + '</p>' +
             '<p>سازنده : ' + obj.Company + '<a class="btn btn-default" href="' + obj.CompanyUrl + '">سایت... »</a></p></p>' +
             '<p>منتشر شده در ' + store + isFree + '</p>' +
-            ' <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=' + obj.ApplicationID + '">جزئیات... »</a></p>'+
+            ' <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=' + obj.ApplicationID + '">جزئیات... »</a></p>' +
+            '<a  class="btn btn-default" href="javascript:void(0);" onclick="GotoDetails(\'' + obj.ApplicationID + '\',\'' + obj.StoreName + '\')">جزئیات2... &raquo;</a>' +
+             
             '</div>'
     +'');
+ 
 
         //$("#listmore").append('<div class="col-md-4">' + obj.AppTypeCode + '</div>');
         //$("#listmore").append('<div class="col-md-4">' + obj.CompanyCode + '</div>');  

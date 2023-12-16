@@ -1,0 +1,460 @@
+﻿﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+@*multi Lang =>  https://stackoverflow.com/a/46008865*@
+@*https://www.w3.org/International/questions/qa-html-dir*@
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<script>
+    //url
+    const targetUrl = 'http://test.sajjadyosefi.ir/api/Application/ApplicationListByTypeCode';
+    const proxyUrl = 'https://corsproxy.io/?';
+
+    //js
+    var _incallback;
+    var pages = 1;
+    var Id = 8057;
+    var pageIndex = 0;
+    var pageSize = 5;
+    $(window).scroll(function () {
+        var hT = $('#progressmarker').offset().top, 
+            hH = $('#progressmarker').outerHeight(),
+            wH = $(window).height(),
+            wS = $(window).scrollTop();
+        // don't do it if we have reached last page OR we are still grabbing items
+        if (pages >= pageIndex && !_incallback) {
+            if (wS > (hT + hH - wH)) {
+                GetApplicationsListDataByCat();
+            }
+        }
+    });
+    $(document).ready(function () {
+        $("button").click(function () {
+            //$.ajax({
+            //    type: 'POST',
+            //    url: proxyUrl + targetUrl, 
+            //    data: {
+            //        "id": 8057,
+            //        "pageIndex": 0,
+            //        "pageSize": 10
+            //    }, 
+            //    success: function (data) {
+            //        alert("Data: " + data + "\nStatus: " + status);
+            //    }
+            //});
+        });
+        GetCat1ListData();
+        getUrlVars();
+    });
+
+    // Read a page's GET URL variables and return them as an associative array.
+    function getUrlVars() {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < hashes.length; i++) {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    }
+
+    //load from server
+    function GetApplicationsListDataByCat() {
+        //ok
+        //service name : ApplicationListByTypeCode
+        var data1 = {
+            "id": Id,
+            "pageIndex": pageIndex,
+            "pageSize": pageSize
+        };
+
+        _incallback = true;
+        $.ajax({
+            type: 'POST', 
+            url: proxyUrl + targetUrl,
+            //headers: { 
+            //    'Content-Type': 'application/json'
+            //},    
+            data: JSON.stringify(data1), 
+            contentType: "application/json",
+            success: function (data) {
+                if (data != null) {  
+                    var arr = $.parseJSON(data);
+                    for (var i = 0, len = arr.postList.length; i < len; i++) {
+                        AppendApplicationsListData(arr.postList[i]);
+                    }
+                    pageIndex++;
+                    _incallback = false;
+                    pages = pageIndex;
+                }
+                GetCallApplicationsListData();
+
+            },
+            beforeSend: function () {
+                $("#progress").show();
+                GetCallApplicationsListData();
+
+            },
+            complete: function () {
+                $("#progress").hide();
+                //_incallback = false;
+                GetCallApplicationsListData();
+
+            },
+            error: function () {
+                alert("Error while retrieving data!"); 
+                _incallback = true;
+            }
+        });
+    }
+    function GetApplicationsListDataByCompany() {
+        //باید ساخته بشه
+        //نام سرویس
+        //targetCat2Url  - ApplicationListByCompanyCode
+
+        var data1 = {
+            "id": Id,
+            "pageIndex": pageIndex,
+            "pageSize": pageSize
+        };
+
+        _incallback = true;
+        $.ajax({
+            type: 'POST',
+            url: proxyUrl + targetCat2Url,
+            //headers: { 
+            //    'Content-Type': 'application/json'
+            //},  
+            data: JSON.stringify(data1),
+            contentType: "application/json",
+            success: function (data) {
+                if (data != null) {
+                    var arr = $.parseJSON(data);
+
+                    for (var i = 0, len = arr.postList.length; i < len; i++) {
+                        AppendApplicationsListData(arr.postList[i]);
+                    }
+
+                    pageIndex++;
+                    _incallback = false;
+                    pages = pageIndex;
+                }
+                GetCallApplicationsListData();
+
+            },
+            beforeSend: function () {
+                $("#progress").show();
+                GetCallApplicationsListData();
+
+            },
+            complete: function () {
+                $("#progress").hide();
+                //_incallback = false;
+                GetCallApplicationsListData();
+
+            },
+            error: function () {
+                alert("Error while retrieving data!");
+                _incallback = true;
+            }
+        });
+    }
+
+    function GetCat1ListData() {
+        var data1 = {
+            "pageIndex": 0,
+            "pageSize": 2
+        };
+
+
+        $.ajax({
+            type: 'POST',
+            url: proxyUrl + targetCatLevel1Url,
+            data: JSON.stringify(data1),
+//            dataType: "json",
+            contentType: "application/json",
+            success: function (data) {
+                if (data != null) {
+                    var arr = $.parseJSON(data);
+                    for (var i = 0, len = arr.cat1list.length; i < len; i++) {
+                        AppendCat1Data(arr.cat1list[i]);
+                    }
+                }
+            },
+            beforeSend: function () {
+                $("#progress").show();
+            },
+            complete: function () {
+                $("#progress").hide();
+            },
+            error: function () {
+                alert("Error while retrieving data!");
+            }
+        });
+    }
+    function GetCat2ListData(id) {
+        //اینو باید از سرور بگیرم
+        //الان هارد کده
+        // listCat2 1  -  listCat2 2
+
+        //[Viw_Site_Cat_level_2]
+        //اپلیکیشن های پارساپرداز
+        //اپلیکیشن های رسمی بانک ها
+        //وب سایت های پارسا پرداز
+
+        var data1 = {
+            "id": Id,
+            "pageIndex": 0,
+            "pageSize": 2
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: proxyUrl + targetCatLevel2Url,
+            //data: {
+            //    //"id": Id,
+            //    "pageIndex": pageIndex,
+            //    "pageSize": 1
+            //},
+            data: JSON.stringify(data1),
+            contentType: "application/json",
+
+            success: function (data) {
+                if (data != null) {
+                    var arr = $.parseJSON(data);
+
+                    for (var i = 0, len = arr.cat2list.length; i < len; i++) {
+                        AppendCat2Data(arr.cat2list[i]);
+                    }
+                }
+            },
+            beforeSend: function () {
+                $("#progress").show();
+            },
+            complete: function () {
+                $("#progress").hide();
+            },
+            error: function () {
+                alert("Error while retrieving data!");
+            }
+        });
+    }
+    function PrepareGetApplicationsListDataByNewCat(id) {
+        //reset listmore
+        //$("#listmore").html('<div class="col-md-4">  <h2>Getting started</h2>  <p>  ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that  enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development. </p> <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more »</a></p> </div>');
+        $("#listmore").html('');
+        
+        _incallback;
+        pages = 1;
+        Id = id;
+        pageIndex = 0;
+        pageSize = 5;
+        GetApplicationsListDataByCat();
+
+        //reset listCat2
+        $("#listCat2").html('');
+        //$("#listCat2").append('<div class="col-md-4">  <h2>Getting started</h2>  <p>  ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that  enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development. </p> <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more »</a></p> </div>');
+        GetCat2ListData(id);
+    }
+    function PrepareGetApplicationsListDataByCompanyId(id) {
+        //reset listmore
+        //$("#listmore").html('<div class="col-md-4">  <h2>Getting started</h2>  <p>  ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that  enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development. </p> <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more »</a></p> </div>');
+        $("#listmore").html('');
+
+        _incallback;
+        pages = 1;
+        Id = id;
+        pageIndex = 0;
+        pageSize = 5;
+        GetApplicationsListDataByCompany();
+
+        //reset listCat2
+        //$("#listCat2").append('<div class="col-md-4">  <h2>Getting started</h2>  <p>  ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that  enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development. </p> <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more »</a></p> </div>');
+    }
+    
+
+    //Append
+    function AppendApplicationsListData(obj) {
+        //var obj = jQuery.parseJSON('{"ApplicationID":2,"NameFa":"مزایده","StatementFa":"مزایده","TextFa":"مزایده","LogoPicture":null,"NameEn":null,"StatementEn":null,"VersionCode":0,"VersionName":"آبنبات","Price":null,"DownloadCount":null,"Views":null,"StoreName":"iranapps","isFree":true,"URL":null,"Description":"مزایده","AppTypeCode":8057,"CompanyCode":8063,"Company":"اپلیکیشن های پارساپرداز","CompanyUrl":"0","CompanyIcon":"0","Priority":null}');
+        //var obj = jQuery.parseJSON(data);
+
+
+    //null
+        //"NameEn":null,
+        //"StatementEn":null,
+        //"DownloadCount":null,
+        //"Priority":null
+        //"URL":null,
+        //"Price":null,
+        //"Views":null, 
+        //$("#listmore").append('<div class="col-md-4">' + obj.Price + '</div>');
+        //$("#listmore").append('<div class="col-md-4">' + obj.DownloadCount + '</div>');
+        //$("#listmore").append('<div class="col-md-4">' + obj.URL + '</div>');
+        //$("#listmore").append('<div class="col-md-4">' + obj.Priority + '</div>');
+
+    //use UnUse
+        //ApplicationID":2,                          ok
+        //"NameFa":"مزایده",                        ok
+        //"StatementFa":"مزایده",                   ok
+        //"TextFa":"مزایده",                        
+        // LogoPicture                               ok
+        //"VersionCode":0,                           ok
+        //"VersionName":"آبنبات",                   ok
+        //"StoreName":"iranapps",                    ok
+        //"isFree":true,                             ok
+        //"Description":"مزایده",
+        //"AppTypeCode":8057,
+        //"CompanyCode":8063,
+        //"Company":"اپلیکیشن های پارساپرداز",      ok
+        //"CompanyUrl":"0",                            ok
+        //"CompanyIcon":"0",          14
+
+        var isFree; if (obj.isFree) isFree = "(رایگان)"
+        var store = GetStoreNameFarsi(obj.StoreName);
+
+        $("#listmore").append('' +
+
+            '<div class="col-md-4">' +
+            '<h2>' + obj.NameFa + '(' + obj.VersionName + '-v' + obj.VersionCode + ')</h2>' +
+            '<p>' + obj.StatementFa + '</p>' +
+            '<img width="100px" height="100px" src=' + obj.LogoPicture + '>' + 
+            //'<p>' + obj.TextFa + '</p>' +
+            '<p>سازنده : ' + obj.Company + '<a class="btn btn-default" href="' + obj.CompanyUrl + '">سایت... »</a></p></p>' +
+            '<p>منتشر شده در ' + store + isFree + '</p>' +
+            ' <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=' + obj.ApplicationID + '">جزئیات... »</a></p>'+
+            '</div>'
+    +'');
+
+        //$("#listmore").append('<div class="col-md-4">' + obj.AppTypeCode + '</div>');
+        //$("#listmore").append('<div class="col-md-4">' + obj.CompanyCode + '</div>');  
+        //$("#listmore").append('<div class="col-md-4">' + obj.CompanyIcon + '</div>');
+
+
+        //$("#listmore").append('<div class="col-md-4">' + obj.Description + '</div>');
+
+
+    }
+    function AppendCat1Data(obj) {
+
+       
+
+        //var obj = jQuery.parseJSON('{"ApplicationID":2,"NameFa":"مزایده","StatementFa":"مزایده","TextFa":"مزایده","LogoPicture":null,"NameEn":null,"StatementEn":null,"VersionCode":0,"VersionName":"آبنبات","Price":null,"DownloadCount":null,"Views":null,"StoreName":"iranapps","isFree":true,"URL":null,"Description":"مزایده","AppTypeCode":8057,"CompanyCode":8063,"Company":"اپلیکیشن های پارساپرداز","CompanyUrl":"0","CompanyIcon":"0","Priority":null}');
+        //var obj = jQuery.parseJSON(data); 
+        $("#listCat1").append('<div class="col-md-4">  <h2>' + obj.Name + '</h2>  <p><a  class="btn btn-default" href="javascript:void(0);" onclick="PrepareGetApplicationsListDataByNewCat(' + obj.Id + ');">' + obj.Name + '... &raquo;</a></p> </div>');
+
+        //$("#listCat1").append('<div class="col-md-4">  <h2>Getting started</h2>  <p>  ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that  enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development. </p> <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more »</a></p> </div>');
+    }
+    function AppendCat2Data(obj) {
+        //var obj = jQuery.parseJSON('{"ApplicationID":2,"NameFa":"مزایده","StatementFa":"مزایده","TextFa":"مزایده","LogoPicture":null,"NameEn":null,"StatementEn":null,"VersionCode":0,"VersionName":"آبنبات","Price":null,"DownloadCount":null,"Views":null,"StoreName":"iranapps","isFree":true,"URL":null,"Description":"مزایده","AppTypeCode":8057,"CompanyCode":8063,"Company":"اپلیکیشن های پارساپرداز","CompanyUrl":"0","CompanyIcon":"0","Priority":null}');
+        //var obj = jQuery.parseJSON(data);
+        //$("#listCat2").append('<div class="col-md-4">----------------</div>');
+        //$("#listCat2").append('<div class="col-md-4">  <h2>Getting started</h2>  <p>  ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that  enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development. </p> <p><a class="btn btn-default" href="javascript:void(0);" onclick="PrepareGetApplicationsListDataByCompanyId(8059);">Learn more &raquo;</a></p> </div>');
+        //$("#listCat2").append('<div class="col-md-4">  <h2>Getting started</h2>  <p>  ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that  enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development. </p> <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more »</a></p> </div>');
+        $("#listCat2").append('<div class="col-md-4">*****</div>');
+        $("#listCat2").append('<div class="col-md-4">  <h2>' + obj.Name + '</h2>  <p><a  class="btn btn-default" href="javascript:void(0);" onclick="PrepareGetApplicationsListDataByCompanyId(' + obj.Id + ');">' + obj.Name + '... &raquo;</a></p> </div>');
+
+    }
+
+
+    //other
+    function GetCallApplicationsListData() {
+        //alert("Call data" + " id:" + Id + " | pageIndex:" + pageIndex + " | pageSize :" + pageSize + " | incallback :" + _incallback);
+        //$("#listmore").append('<div class="col-md-4">  <h2>Getting started</h2>  <p>  ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that  enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development. </p> <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more »</a></p> </div>');
+        //$("#listmore").append('<div class="col-md-4">  <h2>Getting started</h2>  <p>  ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that  enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development. </p> <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more »</a></p> </div>');
+    }
+    function GetStoreNameFarsi(name) {
+        if (name == 'socialNetwork')
+            return 'شبکه های اجتماعی';
+
+        if (name == 'iranapps')
+            return 'ایران اپس';
+        if (name == 'myket')
+            return 'مایکت';
+        if (name == 'Bazar')
+            return 'کافه بازار';
+        if (name == 'jhobin')
+            return 'ژوبین'; 
+    }
+  
+
+</script>
+<br />
+<a id="progressmarker" href="#examples"> </a>
+<br />
+<img width="100px" height="200px"/> 
+<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+<div id="listCat1" class="row">
+    @*<div class="col-md-4">
+        <h2>برنامه های موبایلی</h2>
+        <p>
+            مرور و نمایش لیستی از بهترین اپ های سیستم عامل اندروید.
+            این دسته بندی به عنوان پیشفرض انتخاب شده و نمایش داده می شود. 
+        </p>
+        <p><a  class="btn btn-default" href="javascript:void(0);" onclick="PrepareGetApplicationsListDataByNewCat(8057);">لیست اپ ها... &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>سایت ها</h2>
+        <p>مشاهده و مرور بهترین سایت ها.</p>
+        @*<p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>* @
+        <p><a class="btn btn-default" href="javascript:void(0);" onclick="PrepareGetApplicationsListDataByNewCat(8059);">نمایش بیشتر... &raquo;</a></p>
+    </div>*@
+</div>
+<hr />
+<div id="listCat2" class="row">
+    <div class="col-md-4">
+        <h2>listCat2 1</h2>
+        <p>
+            مرور و نمایش لیستی از بهترین اپ های سیستم عامل اندروید. 
+            این دسته بندی به عنوان پیشفرض انتخاب شده و نمایش داده می شود. 
+        </p> 
+        <p><a class="btn btn-default" href="#">Learn more &raquo;</a></p>
+        <a class="btn btn-default" href="javascript:void(0);" onclick="PrepareGetApplicationsListDataByCompanyId(8066);">وب سایت های پارسا پرداز &raquo;</a>
+        <a class="btn btn-default" href="javascript:void(0);" onclick="PrepareGetApplicationsListDataByCompanyId(8064);">اپلیکیشن های رسمی بانک ها &raquo;</a>
+        <a class="btn btn-default" href="javascript:void(0);" onclick="PrepareGetApplicationsListDataByCompanyId(8063);">اپلیکیشن های پارساپرداز &raquo;</a>
+
+
+    </div>
+    <div class="col-md-4">
+        <h2>listCat2 2 </h2>
+        <p>Browse a list of the best websites and portals.</p>
+        <p><a class="btn btn-default" href="#">Learn more &raquo;</a></p>
+    </div>
+
+</div>
+<hr />
+
+<div id="listmore" class="row mb-2">
+    @*<div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+            enables a clean separation of concerns and gives you full control over markup
+            for enjoyable, agile development.
+        </p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>*@
+
+</div>
+
+<hr />
+ver 1.0.5

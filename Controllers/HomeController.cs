@@ -13,6 +13,18 @@ namespace OfficialAppWebSiteApplication.Controllers
             return View();
         }
 
+        public ActionResult Details(string ApplicationID, string storeName)
+        {
+
+            bool isValid = true;  
+            var obj = new
+            {
+                valid = isValid
+            };
+           // return Json(obj);
+            return View();
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
