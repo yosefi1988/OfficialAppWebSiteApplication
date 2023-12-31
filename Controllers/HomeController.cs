@@ -16,6 +16,10 @@ namespace OfficialAppWebSiteApplication.Controllers
         public ActionResult Details(string ApplicationID, string storeName)
         {
 
+            ViewBag.ApplicationID = ApplicationID;
+            ViewBag.storeName = storeName;
+
+
             bool isValid = true;  
             var obj = new
             {
