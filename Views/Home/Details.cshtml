@@ -103,7 +103,6 @@
         //var obj = jQuery.parseJSON('{"ApplicationID":2,"NameFa":"مزایده","StatementFa":"مزایده","TextFa":"مزایده","LogoPicture":null,"NameEn":null,"StatementEn":null,"VersionCode":0,"VersionName":"آبنبات","Price":null,"DownloadCount":null,"Views":null,"StoreName":"iranapps","isFree":true,"URL":null,"Description":"مزایده","AppTypeCode":8057,"CompanyCode":8063,"Company":"اپلیکیشن های پارساپرداز","CompanyUrl":"0","CompanyIcon":"0","Priority":null}');
         //var obj = jQuery.parseJSON(data);
  
- 
         var isFree; if (obj.isFree) isFree = "(رایگان)"
         var store = GetStoreNameFarsi(obj.StoreName);
 
@@ -112,11 +111,32 @@
             '<div class="col-md-4">' +
             '<h2>' + obj.NameFa + '(' + obj.VersionName + '-v' + obj.VersionCode + ')</h2>' +
             '<p>' + obj.StatementFa + '</p>' +
+            '<p>' + obj.ApplicationID + '</p>' +
+            '<p>' + obj.TextFa + '</p>' +
+            '<p>' + obj.NameEn + '</p>' +
+            '<p>' + obj.Price + '</p>' +
+            '<p>' + obj.DownloadCount + '</p>' +
+            '<p>' + obj.Views + '</p>' +
+            '<p>' + obj.URL + '</p>' +
+            '<p>' + obj.Description + '</p>' +
+            '<p>' + obj.AppTypeCode + '</p>' +
+            '<p>' + obj.CompanyCode + '</p>' +
+
+            '<p>' + obj.Priority + '</p>' +
+            '<p>' + obj.ApplicationVersionStatement + '</p>' +
+            '<p>' + obj.DownloadUrl + '</p>' +
+            '<p>' + obj.MainUrl + '</p>' +
+            '<p>' + obj.Name + '</p>' +
+            '<p>' + obj.DownloadUrl + '</p>' +
+
             '<img width="100px" height="100px" src=' + obj.LogoPicture + '>' +
+            '<img width="100px" height="100px" src=' + obj.CompanyIcon + '>' +
+            '<img width="100px" height="100px" src=' + obj.ImageUrl + '>' +
+            '<img width="100px" height="100px" src=' + obj.icon + '>' +
             //'<p>' + obj.TextFa + '</p>' +
             '<p>سازنده : ' + obj.Company + '<a class="btn btn-default" href="' + obj.CompanyUrl + '">سایت... »</a></p></p>' +
             '<p>منتشر شده در ' + store + isFree + '</p>' +
-            ' <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=' + obj.ApplicationID + '">جزئیات... »</a></p>' +
+            ' <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=' + obj.ApplicationID + '">xxxx... »</a></p>' +
             '</div>'
     + '');
 
