@@ -12,6 +12,10 @@ namespace OfficialAppWebSiteApplication.Controllers
         {
             return View();
         }
+        public ActionResult IndexC()
+        {
+            return View();
+        }
 
         public ActionResult Details(string ApplicationID, string storeName)
         {
