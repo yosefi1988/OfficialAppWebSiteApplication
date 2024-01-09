@@ -11,7 +11,7 @@
 <script>
     //url
     const targetUrl = 'http://test.sajjadyosefi.ir/api/Application/ApplicationListByTypeCode';
-    const targetPostUrl = 'http://test.sajjadyosefi.ir/api/Post/PostList';
+    const targetPostUrl = 'http://test.sajjadyosefi.ir/api/Post/PostListForSite';
     const targetxxxxxxxxxxxUrl = 'http://test.sajjadyosefi.ir/api/Application/ApplicationListByCompanyCode';
     const targetxxxxxxxxxxxxUrl = 'http://test.sajjadyosefi.ir/api/Category/CategoryLevel1';
     const targetxxxxxxxxxxxxxUrl = 'http://test.sajjadyosefi.ir/api/Category/CategoryLevel2';
@@ -217,13 +217,34 @@
         //$("#listmore").append('<div class="col-md-4">' + obj.Description + '</div>');
     }
     function AppendApplicationPostsListData(obj) {
- 
+    // [{\
+        //"ID\":28177,\
+    //"CreatorFullName\":\" \",\
+    //"TTC\":5043,\
+        //"TTN\":\"درخواست قطعه یا لوازم یدکی\",\
+    //"image\":null,\
+    //"icon\":null,\
+    //"RefrenceNo\":null,\
+        //"title\":\"غربیلک فرمان سمندطرح جدیدوداشبورد سمند. طرح جدید\",\
+        //"text\":\"نیازمند. داشبورد سمند99.باغربیلک فرمان\",\
+    //"Amount\":0,\
+    //"Zarib\":0,\
+        //"DateTime\":\"دو شنبه - 1402/6/27\",\
+    //"DateTimeExpire\":\"چهارشنبه - 1402/10/27\",\
+        //"StateName\":\"چهارمحال و بختیاری\",\
+    //"CityName\":\"نامشخص\",\
+    //"ReciveMessage\":true,\
+    //"isFav\":false,\
+    //"isSeen\":false,\
+    //"TitlePicture\":null,\
+    //"TextPicture\":null},
 
         $("#listmore").append('' +
 
             '<div class="col-md-4">' +
             '<h2>' + obj.title + '(' + obj.TTN + '-' + obj.StateName + ')</h2>' + //+ obj.ID + +
             '<p>' + obj.DateTime + '</p>' +
+            '<p>' + obj.text + '</p>' +
             '<img width="100px" height="100px" src=' + obj.TitlePicture + '>' + 
             //'<p>منتشر شده در ' + store  + '</p>' +
             //' <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=' + obj.ApplicationID + '">جزئیات... »</a></p>' +
