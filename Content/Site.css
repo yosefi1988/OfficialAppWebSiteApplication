@@ -1,8 +1,19 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-    font-family: Calibri;
+﻿
+
+@font-face {
+  font-family: 'vaz';
+  font-style:  normal;
+  font-weight: 900;
+  src: url('../fonts/Vazir.woff') format('woff');
 }
+
+
+body {
+    padding-top: 30px;
+    padding-bottom: 20px;
+    font-family: vaz;
+}
+
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -23,3 +34,13 @@ select,
 textarea {
     max-width: 280px;
 }
+/*@font-face {
+ font-family: 'sans-serif';
+ font-weight: normal;
+ font-style: normal;
+ src: url('../fonts/sans-serif.eot') format('embedded-opentype'), 
+     url('../fonts/sans-serif.woff') format('woff'), 
+     url('../fonts/sans-serif.ttf') format('truetype'),
+     url('../fonts/sans-serif.otf') format('opentype'), 
+     url('../fonts/sans-serif.svg#sans-serif') format('svg');
+}*/

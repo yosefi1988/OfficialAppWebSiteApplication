@@ -180,14 +180,26 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\dist\css\carousel.rtl.css" />
+    <Content Include="assets\dist\js\bootstrap.bundle.min.js" />
+    <Content Include="assets\js\color-modes.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap.rtl.css" />
+    <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\css%403.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="fonts\CALIBRI.TTF" />
+    <Content Include="fonts\CALIBRIB.TTF" />
+    <Content Include="fonts\CALIBRII.TTF" />
+    <Content Include="fonts\CALIBRIL.TTF" />
+    <Content Include="fonts\CALIBRILI.TTF" />
+    <Content Include="fonts\CALIBRIZ.TTF" />
     <None Include="Properties\PublishProfiles\test2.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
