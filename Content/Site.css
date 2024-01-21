@@ -1,17 +1,14 @@
-﻿
+﻿@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap');
+/*@import 'vazir.css';*/
 
-@font-face {
-  font-family: 'vaz';
-  font-style:  normal;
-  font-weight: 900;
-  src: url('../fonts/Vazir.woff') format('woff');
+:root , [data-bs-theme=light]{
+    --bs-body-font-size: 0.85rem;
 }
 
-
 body {
-    padding-top: 30px;
     padding-bottom: 20px;
-    font-family: vaz;
+    font-family: 'Vazirmatn';
+    /*font-family: Vazir;*/
 }
 
 

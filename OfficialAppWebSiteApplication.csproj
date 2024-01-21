@@ -187,7 +187,8 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\css%403.css" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\site.css" />
+    <Content Include="Content\vazir.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -199,6 +200,10 @@
     <Content Include="fonts\CALIBRIL.TTF" />
     <Content Include="fonts\CALIBRILI.TTF" />
     <Content Include="fonts\CALIBRIZ.TTF" />
+    <Content Include="fonts\Vazir-Black-FD.woff2" />
+    <Content Include="fonts\Vazir-Bold-FD.woff2" />
+    <Content Include="fonts\Vazir-FD.woff2" />
+    <Content Include="fonts\Vazir-Medium-FD.woff2" />
     <None Include="Properties\PublishProfiles\test2.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
