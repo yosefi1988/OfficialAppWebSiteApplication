@@ -36,10 +36,13 @@
         // don't do it if we have reached last page OR we are still grabbing items
         if (pages >= pageIndex && !_incallback) {
             if (wS > (hT + hH - wH)) {
-                GetApplicationsPostListData();
+                GetApplicationsPostListData(XXXXXXXXXXXXXXXXXX);
             }
         }
     });
+
+ 
+
     $(document).ready(function () {
         $("button").click(function () {
             //$.ajax({
@@ -56,8 +59,13 @@
             //});
         }); 
         GetApplicationsListDataByCat();
+        getUrlVars3();
     });
 
+    function getUrlVars3() {
+       XXXXXXXXXXXX =  @ViewBag.ApplicationID;
+        @ViewBag.storeName;
+    }
 
     //load from server
     function GetApplicationsListDataByCat() {
@@ -282,7 +290,7 @@
             return 'ژوبین'; 
     }
     function GotoDetails(applicationid, storeName) {
-        window.location.href = targetDetailsUrl + '?applicationid=' + 2 + '&storeName=' + storeName;
+        window.location.href = targetDetailsUrl + '?applicationid=' + applicationid + '&storeName=' + storeName;
     }
 
 </script>
