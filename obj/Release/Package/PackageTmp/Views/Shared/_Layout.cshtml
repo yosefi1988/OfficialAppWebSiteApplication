@@ -1,44 +1,87 @@
 ﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+<html  dir="rtl" lang="fa"> 
+<head>  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.118.2">
+    <title>@ViewBag.Title - Application</title>
+     
+    
+    <link rel="stylesheet" href="~/Content/bootstrap.rtl.min.css" crossorigin="anonymous">
+@*@Styles.Render("~/Content/css")*@  
+    <link href="~/Content/site.css" rel="stylesheet" />
 
+    @Scripts.Render("~/bundles/modernizr")
+    <style type="text/css">
+        body {
+        }
+    </style>
+    <link href="~/assets/dist/css/carousel.rtl.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+    <header data-bs-theme="dark">
+        <div class="collapse text-bg-dark" id="navbarHeader">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-md-7 py-4">
+                        <h4>مخزن اپ و سایت های رسمی</h4>
+                        <p class="text-body-secondary">اپ یا درگاه های  رسمی را ثبت کنید.<br/>
+                       رایگان اپ های خود را منتشر کنید.<br />
+                       اپ های رسمی و بروز را دانلود کنید.<br />
+                       همواره خدمات این سایت رایگان است.<br />
+                    </div>
+                    <div class="col-sm-4 offset-md-1 py-4">
+                        <h4>خدمات اصلی</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="text-white">ثبت مورد جدید</a></li>
+                            <li><a href="#" class="text-white">انتشار اپلیکیشن</a></li>
+                            <li><a href="#" class="text-white">دانلود کنید</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+        <div class="navbar navbar-dark bg-dark shadow-sm">
+            <div class="container">
+                <a href="#" class="navbar-brand d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" /><circle cx="12" cy="13" r="4" /></svg>
+                    <strong>OfficialApp.ir</strong>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="تبديل التنقل">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+
+
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        
+        <footer class="py-3 my-4">
+            <hr /> 
+            <ul class="nav justify-content-center mb-3">
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+            </ul>
+            <hr /> 
+            <p class="text-center text-body-secondary">&copy; @DateTime.Now.Year - Company, Inc</p>
+            <p class="text-center text-body-secondary">ver 1.0.5</p>
         </footer>
     </div>
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script src="~/assets/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
+
 </html>

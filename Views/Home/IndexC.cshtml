@@ -27,44 +27,47 @@
     var pageIndex = 0;
     var pageSize = 5;
     var ttc = 8109;
-    
+
     $(window).scroll(function () {
-        var hT = $('#progressmarker').offset().top, 
+        scroll(ApplicationId);
+    });
+
+    $(document).ready(function () {
+        $("button").click(function () {
+            //$.ajax({
+            //    type: 'POST',
+            //    url: proxyUrl + targetUrl,
+            //    data: {
+            //        "id": 8057,
+            //        "pageIndex": 0,
+            //        "pageSize": 10
+            //    },
+            //    success: function (data) {
+            //        alert("Data: " + data + "\nStatus: " + status);
+            //    }
+            //});
+        });
+        GetApplicationsListDataByCat();
+        getUrlVars3();
+    });
+
+
+
+    function getUrlVars3() {
+        ApplicationId =  @ViewBag.ApplicationID;
+        scroll(ApplicationId);
+    }
+    function scroll(applicationID) {
+        var hT = $('#progressmarker').offset().top,
             hH = $('#progressmarker').outerHeight(),
             wH = $(window).height(),
             wS = $(window).scrollTop();
         // don't do it if we have reached last page OR we are still grabbing items
         if (pages >= pageIndex && !_incallback) {
             if (wS > (hT + hH - wH)) {
-                GetApplicationsPostListData(XXXXXXXXXXXXXXXXXX);
+                GetApplicationsPostListData(applicationID);
             }
         }
-    });
-
- 
-
-    $(document).ready(function () {
-        $("button").click(function () {
-            //$.ajax({
-            //    type: 'POST',
-            //    url: proxyUrl + targetUrl, 
-            //    data: {
-            //        "id": 8057,
-            //        "pageIndex": 0,
-            //        "pageSize": 10
-            //    }, 
-            //    success: function (data) {
-            //        alert("Data: " + data + "\nStatus: " + status);
-            //    }
-            //});
-        }); 
-        GetApplicationsListDataByCat();
-        getUrlVars3();
-    });
-
-    function getUrlVars3() {
-       XXXXXXXXXXXX =  @ViewBag.ApplicationID;
-        @ViewBag.storeName;
     }
 
     //load from server
@@ -74,66 +77,57 @@
         var data1 = {
             "id": Id,
             "pageIndex": 0,
-            "pageSize": 2
-        };
-         
-        $.ajax({
-            type: 'POST', 
-            url: proxyUrl + targetUrl,
-            //headers: { 
-            //    'Content-Type': 'application/json'
-            //},    
-            data: JSON.stringify(data1), 
-            contentType: "application/json",
-            success: function (data) {
-                if (data != null) {  
-                    var arr = $.parseJSON(data);
-                    for (var i = 0, len = arr.postList.length; i < len; i++) {
-                        AppendApplicationsListData(arr.postList[i]); 
-                    } 
-                }
-                GetCallApplicationsListData();
-
-            },
-            beforeSend: function () {
-                $("#progress").show();
-                GetCallApplicationsListData();
-
-            },
-            complete: function () {
-                $("#progress").hide(); 
-                GetCallApplicationsListData();
-
-            },
-            error: function () {
-                alert("Error while retrieving data!");  
-            }
-        });
-    }
-    function GetApplicationsPostListData() {
- 
-        var data1 = {
-            "IDApplication": ApplicationId,
-            "IsActive":true,  
-            "pageIndex": pageIndex,
-            "pageSize": pageSize,
-            "ttc":ttc
+            "pageSize": 3
         };
 
-
-        _incallback = true;
         $.ajax({
             type: 'POST',
-            url: proxyUrl + targetPostUrl,
-            //headers: { 
+            url: proxyUrl + targetUrl,
+            //headers: {
             //    'Content-Type': 'application/json'
-            //},  
+            //},
             data: JSON.stringify(data1),
             contentType: "application/json",
             success: function (data) {
                 if (data != null) {
                     var arr = $.parseJSON(data);
+                    for (var i = 0, len = arr.postList.length; i < len; i++) {
+                        AppendApplicationsListData(arr.postList[i]);
+                    }
+                }
+            },
+            beforeSend: function () {
+                $("#progress").show();
+            },
+            complete: function () {
+                $("#progress").hide();
+            },
+            error: function () {
+                alert("Error while retrieving data!");
+            }
+        });
+    }
+    function GetApplicationsPostListData(applicationID) {
+        var data1 = {
+            "IDApplication": applicationID,
+            "IsActive":true,
+            "pageIndex": pageIndex,
+            "pageSize": pageSize,
+            "ttc":ttc
+        };
 
+        _incallback = true;
+        $.ajax({
+            type: 'POST',
+            url: proxyUrl + targetPostUrl,
+            //headers: {
+            //    'Content-Type': 'application/json'
+            //},
+            data: JSON.stringify(data1),
+            contentType: "application/json",
+            success: function (data) {
+                if (data != null) {
+                    var arr = $.parseJSON(data);
                     for (var i = 0, len = arr.postList.length; i < len; i++) {
                         AppendApplicationPostsListData(arr.postList[i]);
                     }
@@ -142,19 +136,13 @@
                     _incallback = false;
                     pages = pageIndex;
                 }
-                GetCallApplicationsListData();
-
             },
             beforeSend: function () {
                 $("#progress").show();
-                GetCallApplicationsListData();
-
             },
             complete: function () {
                 $("#progress").hide();
                 //_incallback = false;
-                GetCallApplicationsListData();
-
             },
             error: function () {
                 alert("Error while retrieving data!");
@@ -163,123 +151,72 @@
         });
     }
 
-
     //Append
     function AppendApplicationsListData(obj) {
-        //var obj = jQuery.parseJSON('{"ApplicationID":2,"NameFa":"مزایده","StatementFa":"مزایده","TextFa":"مزایده","LogoPicture":null,"NameEn":null,"StatementEn":null,"VersionCode":0,"VersionName":"آبنبات","Price":null,"DownloadCount":null,"Views":null,"StoreName":"iranapps","isFree":true,"URL":null,"Description":"مزایده","AppTypeCode":8057,"CompanyCode":8063,"Company":"اپلیکیشن های پارساپرداز","CompanyUrl":"0","CompanyIcon":"0","Priority":null}');
-        //var obj = jQuery.parseJSON(data);
-
-
-    //null
-        //"NameEn":null,
-        //"StatementEn":null,
-        //"DownloadCount":null,
-        //"Priority":null
-        //"URL":null,
-        //"Price":null,
-        //"Views":null, 
-        //$("#listmore").append('<div class="col-md-4">' + obj.Price + '</div>');
-        //$("#listmore").append('<div class="col-md-4">' + obj.DownloadCount + '</div>');
-        //$("#listmore").append('<div class="col-md-4">' + obj.URL + '</div>');
-        //$("#listmore").append('<div class="col-md-4">' + obj.Priority + '</div>');
-
-    //use UnUse
-        //ApplicationID":2,                          ok
-        //"NameFa":"مزایده",                        ok
-        //"StatementFa":"مزایده",                   ok
-        //"TextFa":"مزایده",                        
-        // LogoPicture                               ok
-        //"VersionCode":0,                           ok
-        //"VersionName":"آبنبات",                   ok
-        //"StoreName":"iranapps",                    ok
-        //"isFree":true,                             ok
-        //"Description":"مزایده",
-        //"AppTypeCode":8057,
-        //"CompanyCode":8063,
-        //"Company":"اپلیکیشن های پارساپرداز",      ok
-        //"CompanyUrl":"0",                            ok
-        //"CompanyIcon":"0",          14
-
         var isFree; if (obj.isFree) isFree = "(رایگان)"
         var store = GetStoreNameFarsi(obj.StoreName);
 
-        $("#listmore").append('' +
-
-            '<div class="col-md-4">' +
-            '<h2>' + obj.NameFa + '(' + obj.VersionName + '-v' + obj.VersionCode + ')</h2>' +
-            '<p>' + obj.StatementFa + '</p>' +
-            '<img width="100px" height="100px" src=' + obj.LogoPicture + '>' + 
-            //'<p>' + obj.TextFa + '</p>' +
-            '<p>سازنده : ' + obj.Company + '<a class="btn btn-default" href="' + obj.CompanyUrl + '">سایت... »</a></p></p>' +
-            '<p>منتشر شده در ' + store + isFree + '</p>' +
-            ' <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=' + obj.ApplicationID + '">جزئیات... »</a></p>' +
-            '<a  class="btn btn-default" href="javascript:void(0);" onclick="GotoDetails(\'' + obj.ApplicationID + '\',\'' + obj.StoreName + '\')">جزئیات2... &raquo;</a>' +
-             
-            '</div>'
-    +'');
-
-        //$("#listmore").append('<div class="col-md-4">' + obj.AppTypeCode + '</div>');
-        //$("#listmore").append('<div class="col-md-4">' + obj.CompanyCode + '</div>');  
-        //$("#listmore").append('<div class="col-md-4">' + obj.CompanyIcon + '</div>');
-
-        //$("#listmore").append('<div class="col-md-4">' + obj.Description + '</div>');
-    }
-    function AppendApplicationPostsListData(obj) {
-    // [{\
-        //"ID\":28177,\
-    //"CreatorFullName\":\" \",\
-    //"TTC\":5043,\
-        //"TTN\":\"درخواست قطعه یا لوازم یدکی\",\
-    //"image\":null,\
-    //"icon\":null,\
-    //"RefrenceNo\":null,\
-        //"title\":\"غربیلک فرمان سمندطرح جدیدوداشبورد سمند. طرح جدید\",\
-        //"text\":\"نیازمند. داشبورد سمند99.باغربیلک فرمان\",\
-    //"Amount\":0,\
-    //"Zarib\":0,\
-        //"DateTime\":\"دو شنبه - 1402/6/27\",\
-    //"DateTimeExpire\":\"چهارشنبه - 1402/10/27\",\
-        //"StateName\":\"چهارمحال و بختیاری\",\
-    //"CityName\":\"نامشخص\",\
-    //"ReciveMessage\":true,\
-    //"isFav\":false,\
-    //"isSeen\":false,\
-        //"TitlePicture\":null,\
-    //"TextPicture\":null},
-
-
-
-        $("#listmore").append('' +
-
-            '<div class="col-md-4">' +
-            '<h2>' + obj.title + '(' + obj.TTN + '-' + obj.StateName + ')</h2>' + //+ obj.ID + +
-            '<p>' + obj.DateTime + '</p>' +
-            '<p>' + obj.text + '</p>' +
-            '<img width="100px" height="100px" src=' + obj.TitlePicture + '>' + 
-            //'<p>منتشر شده در ' + store  + '</p>' +
+        $("#listAppMore").append('' +
+            //'<div class="col-md-4">' +
+            //'<h2>' + obj.NameFa + '(' + obj.VersionName + '-v' + obj.VersionCode + ')</h2>' +
+            //'<p>' + obj.StatementFa + '</p>' +
+            //'<img width="100px" height="100px" src=' + obj.LogoPicture + '>' +
+            ////'<p>' + obj.TextFa + '</p>' +
+            //'<p>سازنده : ' + obj.Company + '<a class="btn btn-default" href="' + obj.CompanyUrl + '">سایت... »</a></p></p>' +
+            //'<p>منتشر شده در ' + store + isFree + '</p>' +
             //' <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=' + obj.ApplicationID + '">جزئیات... »</a></p>' +
             //'<a  class="btn btn-default" href="javascript:void(0);" onclick="GotoDetails(\'' + obj.ApplicationID + '\',\'' + obj.StoreName + '\')">جزئیات2... &raquo;</a>' +
+
+            //'</div>'
+
+             '<div class="feature col">' +
+                '<div class="card">' +
+                  '<div class="card-body">' +
+                         '<a href="javascript:void(0);" onclick="GotoDetails(\'' + obj.ApplicationID + '\',\'' + obj.StoreName + '\')" class="">' +
+                                '<div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">' +
+                                        '<img width="100em" height="100em" src=' + obj.LogoPicture + '>' +
+                                '</div>' +
+                                '<h3 class="fs-2 text-body-emphasis">' + obj.NameFa + '</h3>' +
+                         '</a>' +
+                         '<p class="card-text">' + obj.StatementFa + '</p>' +
+                  '</div>' +
+                  '<ul class="list-group list-group-flush">' +
+                        '<li class="list-group-item">نام نسخه ' + obj.VersionName + ' - کد نسخه (' + obj.VersionCode + ')</li>' +
+                        '<li class="list-group-item">سازنده : ' + obj.Company + ' (<a class="card-link" href="' + obj.CompanyUrl + '"> مشاهده وب سایت... </a>)</li>' +
+                        '<li class="list-group-item">منتشر شده در ' + store + isFree + '</li>' +
+                  '</ul>' +
+                  '<div class="card-footer text-body-secondary">' +
+                        '<a href="javascript:void(0);" onclick="GotoDetails(\'' + obj.ApplicationID + '\',\'' + obj.StoreName + '\')" class="card-link">دانلود و مشاهده جزئیات...</a>' +
+        //'<a href="#" class="card-link">رابط آخر</a>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
             '</div>'
-    + '');
 
-        //$("#listmore").append('<div class="col-md-4">' + obj.AppTypeCode + '</div>');
-        //$("#listmore").append('<div class="col-md-4">' + obj.CompanyCode + '</div>');  
-        //$("#listmore").append('<div class="col-md-4">' + obj.CompanyIcon + '</div>');
-        //$("#listmore").append('<div class="col-md-4">' + obj.Description + '</div>');
+    +'');
     }
-
-
-
-    //other
-    function GetCallApplicationsListData() {
-        //alert("Call data" + " id:" + Id + " | pageIndex:" + pageIndex + " | pageSize :" + pageSize + " | incallback :" + _incallback);
-        //$("#listmore").append('<div class="col-md-4">  <h2>Getting started</h2>  <p>  ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that  enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development. </p> <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more »</a></p> </div>');
-        //$("#listmore").append('<div class="col-md-4">  <h2>Getting started</h2>  <p>  ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that  enables a clean separation of concerns and gives you full control over markup for enjoyable, agile development. </p> <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more »</a></p> </div>');
+    function AppendApplicationPostsListData(obj) {
+        $("#listmore").append('' +
+            '<div class="col-md-6">'+
+                '<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">'+
+                    '<div class="col p-4 d-flex flex-column position-static">'+
+                        '<strong class="d-inline-block mb-2 text-success-emphasis">' + obj.TTN + '-' + obj.StateName + '</strong>'+
+                        '<h3 class="mb-0">' + obj.title + '</h3>'+
+                        '<div class="mb-1 text-body-secondary">' + obj.DateTime + '</div>'+
+                        '<p class="mb-auto">' + obj.text + '</p>'+
+                        '<a href="'+obj.text+'" class="icon-link">مشاهده بیشتر &raquo;</a>'+
+                    '</div>'+
+                    '<div class="col-auto d-block">'+
+                        //'<svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>'+
+                        '<img class="bd-placeholder-img" width="200" height="250" src=' + obj.TitlePicture + ' role="img"       aria-label="Placeholder:' + obj.title + '" preserveAspectRatio="xMidYMid slice" focusable="false">' +
+                    '</div>'+
+                '</div>'+
+            '</div>'
+        + '');
     }
     function GetStoreNameFarsi(name) {
         if (name == 'socialNetwork')
             return 'شبکه های اجتماعی';
-
         if (name == 'iranapps')
             return 'ایران اپس';
         if (name == 'myket')
@@ -287,77 +224,15 @@
         if (name == 'Bazar')
             return 'کافه بازار';
         if (name == 'jhobin')
-            return 'ژوبین'; 
+            return 'ژوبین';
     }
     function GotoDetails(applicationid, storeName) {
         window.location.href = targetDetailsUrl + '?applicationid=' + applicationid + '&storeName=' + storeName;
     }
-
-</script>
-<br />
-<a id="progressmarker" href="#examples"> </a>
-<br />
-<img width="100px" height="200px"/> 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
-<div id="listCat1" class="row">
- 
-</div>
-<hr />
-<div id="listCat2" class="row">
-    <div class="col-md-4">
-        <h2>listCat2 1</h2>
-        <p>
-            مرور و نمایش لیستی از بهترین اپ های سیستم عامل اندروید. 
-            این دسته بندی به عنوان پیشفرض انتخاب شده و نمایش داده می شود. 
-        </p> 
-        <p><a class="btn btn-default" href="#">Learn more &raquo;</a></p> 
-
-    </div>
-    <div class="col-md-4">
-        <h2>listCat2 2 </h2>
-        <p>Browse a list of the best websites and portals.</p>
-        <p><a class="btn btn-default" href="#">Learn more &raquo;</a></p>
-    </div>
-
-</div>
-<hr />
-
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
-<hr />
-
-<div id="listmore" class="row mb-2">
-    @*<div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>*@
-
-</div>
-
+</script> 
+<a id="progressmarker" href="#examples"> </a> 
+<div id="listCat1" class="row"></div>  
+<div id="listAppMore" class="row mb-3"></div>
+<div id="listmore" class="row mb-2"></div>
 <hr />
 ver 1.01.1

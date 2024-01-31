@@ -12,8 +12,10 @@ namespace OfficialAppWebSiteApplication.Controllers
         {
             return View();
         }
-        public ActionResult IndexC()
+        public ActionResult IndexC(string ApplicationID)
         {
+            ViewBag.ApplicationID = ApplicationID;
+
             return View();
         }
 
