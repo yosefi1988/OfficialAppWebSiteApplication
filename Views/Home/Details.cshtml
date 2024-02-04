@@ -115,7 +115,7 @@
             '<h1 id="appname" class="display-3 fw-bold">'+ obj.NameFa +'</h1>'+
             '<h3  id="appnameDesc" class="fw-normal text-muted mb-3"></h3>'+
             '<div class="d-flex gap-3 justify-content-center lead fw-normal">'+
-                '<a class="icon-link" href="#">'+
+                '<a class="icon-link" href="http://localhost:10528/Home/IndexC?applicationid=' + obj.ApplicationID + '">'+
                     'بدون نصب &raquo;'+
                     '<svg class="bi"><use xlink:href="#chevron-right"></use></svg>'+
                 '</a> '+
@@ -149,7 +149,7 @@
             '<' + obj.ApplicationVersionStatement + '>' + '</br>'+ 
             '<strong>تارنمای اصلی :</strong>' + '<a href="' + obj.MainUrl + '" class="icon-link">' + obj.MainUrl + '</a>' + '</br>'
         );
-
+         
 
         //نسخه
         $("#appPublished").append(
