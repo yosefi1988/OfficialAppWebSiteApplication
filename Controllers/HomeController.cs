@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,13 +9,24 @@ namespace OfficialAppWebSiteApplication.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        //OfficeialApp
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
+
+        //indexC Details
+        public ActionResult Index(string ApplicationID)
         {
-            return View();
-        }
-        public ActionResult IndexC(string ApplicationID)
-        {
-            ViewBag.ApplicationID = ApplicationID;
+            if(ApplicationID != null)
+            {
+                ViewBag.ApplicationID = ApplicationID;
+            }
+            else
+            {
+                string siteID = ConfigurationManager.AppSettings["SiteID"];
+                ViewBag.ApplicationID = siteID;
+            }
 
             return View();
         }
