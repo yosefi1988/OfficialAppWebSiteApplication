@@ -207,6 +207,7 @@
     <Content Include="fonts\Vazir-Medium-FD.woff2" />
     <None Include="Properties\PublishProfiles\test2.pubxml" />
     <None Include="Properties\PublishProfiles\testftp.pubxml" />
+    <Content Include="README.md" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

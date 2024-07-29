@@ -10,14 +10,18 @@
 
 <script>
     //url
-    const targetUrl = 'http://test.sajjadyosefi.ir/api/Application/ApplicationListByTypeCode';
-    const targetPostUrl = 'http://test.sajjadyosefi.ir/api/Post/PostListForSite';
-    const targetxxxxxxxxxxxUrl = 'http://test.sajjadyosefi.ir/api/Application/ApplicationListByCompanyCode';
-    const targetxxxxxxxxxxxxUrl = 'http://test.sajjadyosefi.ir/api/Category/CategoryLevel1';
-    const targetxxxxxxxxxxxxxUrl = 'http://test.sajjadyosefi.ir/api/Category/CategoryLevel2';
+    //const Host = 'http://localhost:24710';
+    const Host = 'https://test.officialapp.ir';
+
+    const targetUrl = Host + '/api/Application/ApplicationListByTypeCode';
+    const targetPostUrl = Host + '/api/Post/PostListForSite';
+    const targetxxxxxxxxxxxUrl = Host + '/api/Application/ApplicationListByCompanyCode';
+    const targetxxxxxxxxxxxxUrl = Host + '/api/Category/CategoryLevel1';
+    const targetxxxxxxxxxxxxxUrl = Host + '/api/Category/CategoryLevel2';
     const targetDetailsUrl = 'home/Details';
-    const targetPicUrl = 'https://sajjadyosefi.ir/img/profile.jpg';
+    const targetPicUrl = 'https://officialapp.ir/img/profile.jpg';
     const proxyUrl = 'https://corsproxy.io/?';
+    //const proxyUrl = '';
 
     //js
     var _incallback;
